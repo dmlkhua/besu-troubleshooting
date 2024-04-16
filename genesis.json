@@ -2,7 +2,7 @@
   "alloc" : { },
   "coinbase" : "0x0000000000000000000000000000000000000000",
   "config" : {
-    "chainId" : 1337,
+    "chainId" : 857309,
     "contractSizeLimit" : 2147483647,
     "londonBlock" : 0,
     "qbft" : {
