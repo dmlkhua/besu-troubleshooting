@@ -1,4 +1,4 @@
-bootnodes=["enode://066d39ef5d97e72a0764b145d66ed1741a0c24195ea31858e1706599250308af71a696df1d1e7a8629e55132417e1a595f610feae7bdc1ca6f77a0ffcca0ffc1@node1.dmlkh-besu.svc.cluster.local:30303"]
+bootnodes=["enode://ea51aef0bc49865b95cbe37b29f23c69c7a7709c0cacac687ada7e310390a95207a6f84bb469084be2d32d3acfa080abd5390468210db94a7bc00ee8e45904a5@node0.dmlkh-besu.svc.cluster.local:30303"]
 data-path="/etc/data"
 discovery-enabled=true
 genesis-file="/etc/config/genesis/genesis.json"
