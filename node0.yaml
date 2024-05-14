@@ -1,0 +1,130 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: node0
+  namespace: dmlkh-besu
+  labels:
+    scope: playground
+spec:
+  storageClassName: gp2-general
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: node0keys
+  namespace: dmlkh-besu
+  labels:
+    scope: playground
+stringData:
+  key: 0x3a7d6b6537a943d9d534f346f0b98a53ddbeb1e4fb8b01029ed9d75572c023d8
+  key.pub: 0xea51aef0bc49865b95cbe37b29f23c69c7a7709c0cacac687ada7e310390a95207a6f84bb469084be2d32d3acfa080abd5390468210db94a7bc00ee8e45904a5
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: node0cfg
+  namespace: dmlkh-besu
+  labels:
+    scope: playground
+data:
+  config.toml: |    
+    static-nodes-file="/etc/config/staticnodes/static-nodes.json"
+    discovery-enabled=false
+    identity="node0"
+    data-path="/etc/data"
+    genesis-file="/etc/config/genesis/genesis.json"
+    host-allowlist=["*"]
+    logging="DEBUG"
+    max-peers=5
+    node-private-key-file="/etc/keys/key"
+    nat-method="none"
+    p2p-enabled=true
+    p2p-host="34.240.169.168"
+    p2p-port=30331
+    rpc-http-enabled=true
+    rpc-http-api=["DEBUG", "ETH", "WEB3", "NET", "TRACE", "QBFT", "TXPOOL", "ADMIN", "PERM", "EEA", "PRIV"]
+    rpc-http-authentication-enabled=false
+    sync-mode="FULL"
+    data-storage-format="FOREST"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node0
+  namespace: dmlkh-besu
+  labels:
+    scope: playground
+spec:
+  selector:
+    matchLabels:
+      node: node0
+  template:
+    metadata:
+      labels:
+        node: node0
+    spec:
+      volumes:
+        - name: config
+          configMap:
+            name: node0cfg
+        - name: genesis
+          configMap:
+            name: genesis
+        - name: data
+          persistentVolumeClaim:
+            claimName: node0
+        - name: keys
+          secret:
+            secretName: node0keys
+        - name: staticnodes
+          configMap:
+            name: staticnodes
+      initContainers:
+        - name: fix-perms
+          image: busybox
+          volumeMounts:
+            - mountPath: /etc/data
+              name: data
+          resources:
+            limits:
+              cpu: 500m
+              memory: 500Mi
+          securityContext:
+            runAsUser: 0
+          command:
+            - sh
+            - -c
+            - chown -R 1000:1000 /etc/data
+      containers:
+        - name: main
+          image: hyperledger/besu:24.3.0
+          volumeMounts:
+            - mountPath: /etc/config/genesis
+              name: genesis
+            - mountPath: /etc/config/node
+              name: config
+            - mountPath: /etc/keys
+              name: keys
+            - mountPath: /etc/data
+              name: data
+            - mountPath: /etc/config/staticnodes
+              name: staticnodes
+          ports:
+            - containerPort: 30331
+              protocol: UDP
+            - containerPort: 8545
+              protocol: TCP
+            - containerPort: 8546
+              protocol: TCP
+          command:
+            - /bin/bash
+            - -c
+            - --
+          args:
+            - /opt/besu/bin/besu --config-file=/etc/config/node/config.toml --min-gas-price=0
