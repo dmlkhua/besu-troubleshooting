@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: dmlkh-besu
+  name: staticnodes
+data:
+  static-nodes.json: |
+    [
+      "enode://ea51aef0bc49865b95cbe37b29f23c69c7a7709c0cacac687ada7e310390a95207a6f84bb469084be2d32d3acfa080abd5390468210db94a7bc00ee8e45904a5@34.240.169.168:30331",
+      "enode://bf80da787c9ed3a02b5bd9b6e1504ffd174864dae384d4ce1e84184ef5ebd5d3f0326ec1e1e4cedceeca7857434084db0414daef86579b1b3dc6c42339b0693c@34.240.169.168:30332"
+    ]
