@@ -27,7 +27,7 @@ spec:
 apiVersion: discovery.k8s.io/v1
 kind: EndpointSlice
 metadata:
-  name: besu-udp-eps1
+  name: echo
   namespace: dmlkh-besu
   labels:
     kubernetes.io/service-name: besu-udp
