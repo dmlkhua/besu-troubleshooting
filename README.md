@@ -14,4 +14,4 @@
 12) set copied IP into node1.endpoint.yaml, addresses field
 13) `kubectl apply -f node1.endpoint.yaml`
 
-// you can also start UDP echo server from echo.yaml file
+// you can also start UDP echo server from echo-udp.yaml file to test UDP connectivity
