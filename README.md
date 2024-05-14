@@ -5,7 +5,7 @@
 3) `kubectl apply -f lb.yaml`
 4) `kubectl get svc`, copy value from EXTERNAL_IP column
 5) `nslookup {{EXTERNAL_IP}}`, wait until URL is reachable, copy IP
-6) replace IPs in `static-nodes.cm.yaml` with the one copied on a previous step
+6) replace IPs in `static-nodes.cm.yaml` with the one copied on the previous step
 7) `kubectl apply -f static-nodes.cm.yaml`
 8) `kubectl apply -f node0.yaml`
 9) `kubectl get -o wide`, copy node0 pod IP
