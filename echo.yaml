@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: dmlkh-besu
+  name: echo
+spec:
+  selector:
+    matchLabels:
+      component: echo
+  template:
+    metadata:
+      labels:
+        component: echo
+    spec:
+      containers:
+        - name: main
+          image: "tsamsiyu/udp-echo-server"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 33333
+              name: besu-udp
+              protocol: UDP
+          env:
+            - name: PORT
+              value: "33333"
+---
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: besu-udp-eps1
+  namespace: dmlkh-besu
+  labels:
+    kubernetes.io/service-name: besu-udp
+addressType: IPv4
+ports:
+  - protocol: UDP
+    name: echo
+    port: 33333
+endpoints:
+  - addresses:
+      - 10.0.1.166
+---
