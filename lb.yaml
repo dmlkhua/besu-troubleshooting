@@ -35,3 +35,7 @@ spec:
       protocol: UDP
       targetPort: 30303
       name: node4
+    - port: 33333
+      protocol: UDP
+      targetPort: 33333
+      name: echo      
