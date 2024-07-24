@@ -46,7 +46,7 @@ data:
     nat-method="none"
     p2p-enabled=true
     p2p-host="34.240.169.168"
-    p2p-port=30331
+    p2p-port=30303
     rpc-http-enabled=true
     rpc-http-api=["DEBUG", "ETH", "WEB3", "NET", "TRACE", "QBFT", "TXPOOL", "ADMIN", "PERM", "EEA", "PRIV"]
     rpc-http-authentication-enabled=false
