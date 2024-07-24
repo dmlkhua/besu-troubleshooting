@@ -1,41 +1,53 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: besu-udp
-  namespace: dmlkh-besu
+  name: node0-lb
   labels:
     scope: playground
   annotations:
     service.beta.kubernetes.io/aws-load-balancer-manage-backend-security-group-rules: "true"
     service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
     service.beta.kubernetes.io/aws-load-balancer-type: external
-    service.beta.kubernetes.io/aws-load-balancer-name: dmlkh-besu
+    service.beta.kubernetes.io/aws-load-balancer-name: besu-test-node0
   finalizers:
     - service.k8s.aws/resources
 spec:
   type: LoadBalancer
   ports:
-    - port: 30331
-      protocol: UDP
+    - port: 30303
       targetPort: 30303
-      name: node0
-    - port: 30332
       protocol: UDP
+      name: p2pudp
+    - port: 30303
       targetPort: 30303
-      name: node1
-    - port: 30333
-      protocol: UDP
+      protocol: TCP
+      name: p2ptcp
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: node1-lb
+  labels:
+    scope: playground
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-manage-backend-security-group-rules: "true"
+    service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
+    service.beta.kubernetes.io/aws-load-balancer-type: external
+    service.beta.kubernetes.io/aws-load-balancer-name: besu-test-node1
+  finalizers:
+    - service.k8s.aws/resources
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 30303
       targetPort: 30303
-      name: node2
-    - port: 30334
       protocol: UDP
+      name: p2pudp
+    - port: 30303
       targetPort: 30303
-      name: node3
-    - port: 30335
-      protocol: UDP
-      targetPort: 30303
-      name: node4
-    - port: 33333
-      protocol: UDP
-      targetPort: 33333
-      name: echo      
+      protocol: TCP
+      name: p2ptcp
+
+---
