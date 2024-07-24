@@ -116,8 +116,10 @@ spec:
             - mountPath: /etc/config/staticnodes
               name: staticnodes
           ports:
-            - containerPort: 30331
+            - containerPort: 30303
               protocol: UDP
+            - containerPort: 30303
+              protocol: TCP
             - containerPort: 8545
               protocol: TCP
             - containerPort: 8546
