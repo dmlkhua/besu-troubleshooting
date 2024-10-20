@@ -33,7 +33,7 @@
   keytool -list -keystore truststore.p12
   ```
 - take a look how besu config TLS is configured: [node1 sts ref](https://github.com/dmlkhua/besu-troubleshooting/blob/main/node1.sts.yaml#L108)
-- apply nodes (pay attention to set your host in static-nodes-configmap.yaml and node0.ingress.yaml and node1.ingress.yaml):
+- apply nodes (pay attention to set your host in `static-nodes-configmap.yaml`, `node0.ingress.yaml`, `node1.ingress.yaml`):
   ```
   kubectl apply -f genesis-configmap.yaml
   kubectl apply -f static-nodes-configmap.yaml
