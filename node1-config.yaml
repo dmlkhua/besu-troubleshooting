@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: node1-config
+data:
+  config.toml: |
+    static-nodes-file = "/etc/besu/enodes/static-nodes.json"
+    data-path = "/etc/besu/data"
+    genesis-file = "/etc/besu/genesis/genesis.json"
+    node-private-key-file = "/etc/besu/keys/key"
+    data-storage-format = "FOREST"
+    discovery-enabled = false
+    host-allowlist = ["*"]
+    identity = "node1"
+    logging = "DEBUG"
+    max-peers = 5
+    min-gas-price = 0
+    p2p-enabled = true
+    p2p-host = "0.0.0.0"
+    p2p-port = 30303
+    rpc-http-api = ["DEBUG","ETH","WEB3","NET","TRACE","QBFT","TXPOOL","ADMIN","PERM","EEA","PRIV"]
+    rpc-http-authentication-enabled = false
+    rpc-http-enabled = true
+    sync-mode = "FULL"
