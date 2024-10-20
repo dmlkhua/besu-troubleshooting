@@ -1,0 +1,18 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: node1
+spec:
+  secretName: node1-tls
+  commonName: node1
+  issuerRef:
+    name: my-issuer
+    kind: Issuer
+  dnsNames:
+    - "node1.your.host.here"
+  keystores:
+    pkcs12:
+      create: true
+      passwordSecretRef:
+        name: keystore-pwd
+        key: pwd
