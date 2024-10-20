@@ -1,7 +1,7 @@
 
 > Env: k8s
 
-- apply certificates:
+- apply certificates (pay attention to set your host in certificates):
   ```
   kubectl apply -f issuer.yaml
   kubectl apply -f keystore-pwd.yaml
