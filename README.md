@@ -32,13 +32,26 @@
   ```
   keytool -list -keystore truststore.p12
   ```
-- run node with these keys:
-  ```shell
-  --Xp2p-tls-enabled=true
-  --Xp2p-tls-truststore-type=PKCS12
-  --Xp2p-tls-truststore-password-file=/etc/besu/keystorepwd/pwd
-  --Xp2p-tls-truststore-file=/etc/besu/truststore/truststore.p12
-  --Xp2p-tls-keystore-type=PKCS12
-  --Xp2p-tls-keystore-password-file=/etc/besu/keystorepwd/pwd
-  --Xp2p-tls-keystore-file=/etc/besu/tls/keystore.p12
+- apply nodes (pay attention to set your host in static-nodes-configmap.yaml and node0.ingress.yaml and node1.ingress.yaml):
+  ```
+  kubectl apply -f genesis-configmap.yaml
+  kubectl apply -f static-nodes-configmap.yaml
+  
+  kubectl apply -f node0-config.yaml
+  kubectl apply -f node1-config.yaml
+  
+  kubectl apply -f node0-keys.yaml
+  kubectl apply -f node1-keys.yaml
+
+  kubectl apply -f node0-pvc.yaml
+  kubectl apply -f node1-pvc.yaml
+  
+  kubectl apply -f node0.service.yaml
+  kubectl apply -f node1.service.yaml
+
+  kubectl apply -f node0.ingress.yaml
+  kubectl apply -f node1.ingress.yaml
+  
+  kubectl apply -f node0.sts.yaml
+  kubectl apply -f node1.sts.yaml
   ```
