@@ -8,7 +8,7 @@
   - `node0.certificate.yaml`
   - `node1.certificate.yaml`
 - set your relevant storage class in `node0-pvc.yaml` and `node1-pvc.yaml`
-- apply certificates (pay attention to set your host in certificates):
+- apply certificates:
   ```
   kubectl apply -f issuer.yaml
   kubectl apply -f keystore-pwd.yaml
