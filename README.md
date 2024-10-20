@@ -1,12 +1,19 @@
-**Reproducing (AWS example):**
 
-1) ensure you are in `dmlkh-besu` namespace
-3) `kubectl apply -f genesis.yaml`
-4) `kubectl apply -f lb.yaml`
-5) wait until load balancers are provisioned
-6) find load balancers IPs (use `kubectl get svc` to get the host and then run `nslookup {{EXTERNAL_IP}}` or just find it online)
-9) set your IPs to the "static-nodes.cm.yaml" file (IP of "node0-lb" load balancer is for the first entry in the list)
-10) set value for "p2p-host" option in node0.yaml and node1.yaml from a node0-lb and node1-lb IPs accordingly
-11) `kubectl apply -f static-nodes.cm.yaml`
-12) `kubectl apply -f node0.yaml`
-13) `kubectl apply -f node1.yaml`
+> Env: k8s
+
+- apply manifests
+- save node0 ca: `k get -o json secret node0-tls | jq -r '.data["ca.crt"]' | base64 --decode -o node0ca.crt`
+- save node1 ca: `k get -o json secret node1-tls | jq -r '.data["ca.crt"]' | base64 --decode -o node1ca.crt`
+- import node0 ca to truststore: `keytool -import -trustcacerts -file node0ca.crt -alias "node0" -keystore truststore.p12 -storepass abcd1234 -noprompt`
+- import node1 ca to truststore:`keytool -import -trustcacerts -file node1ca.crt -alias "node1" -keystore truststore.p12 -storepass abcd1234 -noprompt`
+- check correctness of truststore: `keytool -list -keystore truststore.p12`
+- run node with these keys:
+  ```shell
+  --Xp2p-tls-enabled=true
+  --Xp2p-tls-truststore-type=PKCS12
+  --Xp2p-tls-truststore-password-file=/etc/besu/keystorepwd/pwd
+  --Xp2p-tls-truststore-file=/etc/besu/truststore/truststore.p12
+  --Xp2p-tls-keystore-type=PKCS12
+  --Xp2p-tls-keystore-password-file=/etc/besu/keystorepwd/pwd
+  --Xp2p-tls-keystore-file=/etc/besu/tls/keystore.p12
+  ```
