@@ -1,6 +1,13 @@
 
 > Env: k8s with https://cert-manager.io and https://traefik.io
 
+- set your relevant cluster host in
+  - `static-nodes-configmap.yaml`
+  - `node0.ingress.yaml`
+  - `node1.ingress.yaml`
+  - `node0.certificate.yaml`
+  - `node1.certificate.yaml`
+- set your relevant storage class in `node0-pvc.yaml` and `node1-pvc.yaml`
 - apply certificates (pay attention to set your host in certificates):
   ```
   kubectl apply -f issuer.yaml
@@ -33,7 +40,7 @@
   keytool -list -keystore truststore.p12
   ```
 - take a look how besu config TLS is configured: [node1 sts ref](https://github.com/dmlkhua/besu-troubleshooting/blob/main/node1.sts.yaml#L108)
-- apply nodes (pay attention to set your host in `static-nodes-configmap.yaml`, `node0.ingress.yaml`, `node1.ingress.yaml`):
+- apply nodes:
   ```
   kubectl apply -f genesis-configmap.yaml
   kubectl apply -f static-nodes-configmap.yaml
