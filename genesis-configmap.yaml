@@ -2,5 +2,38 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: besu-genesis
-data:
-  genesis.json: '{"alloc":{},"coinbase":"0x0000000000000000000000000000000000000000","config":{"arrowGlacierBlock":0,"baseFeePerGas":0,"berlinBlock":0,"byzantiumBlock":0,"chainId":857309,"constantinopleBlock":0,"contractSizeLimit":2147483647,"eip150Block":0,"eip155Block":0,"grayGlacierBlock":0,"homesteadBlock":0,"istanbulBlock":0,"londonBlock":0,"petersburgBlock":0,"qbft":{"blockperiodseconds":3,"epochlength":30000,"requesttimeoutseconds":3},"zeroBaseFee":true},"difficulty":"0x1","extraData":"0xf87aa00000000000000000000000000000000000000000000000000000000000000000f85494c994f3deccb4313bc68307c71735c6caea2a90719443b93ac0d41476a98bec5f64339bfaf4ab32f8e1948218bbec0d38e9cbbf75d0fa7394540d0570b228947653955ed6c2866c7fe08d0de584c3218e288c85c080c0","gasLimit":"0x1fffffffffffff","gasUsed":"0x0","mixHash":"0x0000000000000000000000000000000000000000000000000000000000000000","nonce":"0x0","parentHash":"0x0000000000000000000000000000000000000000000000000000000000000000","timestamp":"0x58ee40ba"}'
+data: |
+  {
+  "alloc": {},
+  "coinbase": "0x0000000000000000000000000000000000000000",
+  "config": {
+    "arrowGlacierBlock": 0,
+    "baseFeePerGas": 0,
+    "berlinBlock": 0,
+    "byzantiumBlock": 0,
+    "chainId": 857309,
+    "constantinopleBlock": 0,
+    "contractSizeLimit": 2147483647,
+    "eip150Block": 0,
+    "eip155Block": 0,
+    "grayGlacierBlock": 0,
+    "homesteadBlock": 0,
+    "istanbulBlock": 0,
+    "londonBlock": 0,
+    "petersburgBlock": 0,
+    "qbft": {
+      "blockperiodseconds": 3,
+      "epochlength": 30000,
+      "requesttimeoutseconds": 3
+    },
+    "zeroBaseFee": true
+  },
+  "difficulty": "0x1",
+  "extraData": "0xf87aa00000000000000000000000000000000000000000000000000000000000000000f85494c994f3deccb4313bc68307c71735c6caea2a90719443b93ac0d41476a98bec5f64339bfaf4ab32f8e1948218bbec0d38e9cbbf75d0fa7394540d0570b228947653955ed6c2866c7fe08d0de584c3218e288c85c080c0",
+  "gasLimit": "0x1fffffffffffff",
+  "gasUsed": "0x0",
+  "mixHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+  "nonce": "0x0",
+  "parentHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+  "timestamp": "0x58ee40ba"
+}
