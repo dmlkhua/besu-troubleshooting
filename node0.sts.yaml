@@ -1,0 +1,119 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: node0
+spec:
+  serviceName: node0
+  replicas: 1
+  selector:
+    matchLabels:
+      node: node0
+  template:
+    metadata:
+      labels:
+        node: node0
+    spec:
+      volumes:
+        - name: config
+          configMap:
+            name: node0-config
+        - name: genesis
+          configMap:
+            name: besu-genesis
+        - name: data
+          persistentVolumeClaim:
+            claimName: node0-data
+        - name: keys
+          secret:
+            secretName: node0-keys
+        - name: enodes
+          configMap:
+            name: besu-enodes
+        - name: tls
+          secret:
+            secretName: node0-tls
+        - name: truststore
+          secret:
+            secretName: truststore
+        - name: keystore-pwd
+          secret:
+            secretName: keystore-pwd
+      initContainers:
+        - name: permissions-fix
+          image: alpine
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: data
+              mountPath: /data
+          securityContext:
+            runAsUser: 0
+          resources:
+            requests:
+              cpu: 200m
+              memory: 200Mi
+            limits:
+              cpu: 300m
+              memory: 300Mi
+          command:
+            - /bin/sh
+            - -c
+            - |
+              chown -R 1000:1000 /data
+      containers:
+        - name: main
+          image: hyperledger/besu:24.8.0
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - mountPath: /etc/besu/genesis
+              name: genesis
+            - mountPath: /etc/besu/config
+              name: config
+            - mountPath: /etc/besu/keys
+              name: keys
+            - mountPath: /etc/besu/data
+              name: data
+            - mountPath: /etc/besu/enodes
+              name: enodes
+            - mountPath: /etc/besu/tls
+              name: tls
+            - mountPath: /etc/besu/truststore
+              name: truststore
+            - mountPath: /etc/besu/keystorepwd
+              name: keystore-pwd
+          ports:
+            - containerPort: 30303
+              protocol: UDP
+              name: p2p
+            - containerPort: 30303
+              protocol: TCP
+              name: p2p-wire
+            - containerPort: 8545
+              protocol: TCP
+              name: rpc-http
+            - containerPort: 8546
+              protocol: TCP
+              name: rpc-ws
+          resources:
+            requests:
+              cpu: 500m
+              memory: 500Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi            
+          command:
+            - /bin/bash
+            - -c
+            - --
+          args:
+            - /opt/besu/bin/besu
+              --Xdns-enabled=true
+              --Xdns-update-enabled=true
+              --Xnat-kube-service-name=node0
+              --Xp2p-tls-enabled=true
+              --Xp2p-tls-truststore-type=PKCS12
+              --Xp2p-tls-truststore-password-file=/etc/besu/keystorepwd/pwd
+              --Xp2p-tls-truststore-file=/etc/besu/truststore/truststore.p12
+              --Xp2p-tls-keystore-type=PKCS12
+              --Xp2p-tls-keystore-password-file=/etc/besu/keystorepwd/pwd
+              --Xp2p-tls-keystore-file=/etc/besu/tls/keystore.p12
+              --config-file=/etc/besu/config/config.toml
