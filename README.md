@@ -1,5 +1,5 @@
 
-> Env: k8s
+> Env: k8s with https://cert-manager.io and https://traefik.io
 
 - apply certificates (pay attention to set your host in certificates):
   ```
