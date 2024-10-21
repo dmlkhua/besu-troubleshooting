@@ -5,15 +5,15 @@
   - `static-nodes-configmap.yaml`
   - `node0-ingress.yaml`
   - `node1-ingress.yaml`
-  - `node0.certificate.yaml`
-  - `node1.certificate.yaml`
+  - `node0-certificate.yaml`
+  - `node1-certificate.yaml`
 - set your relevant storage class in `node0-pvc.yaml` and `node1-pvc.yaml`
 - apply certificates:
   ```
   kubectl apply -f issuer.yaml
   kubectl apply -f keystore-pwd.yaml
-  kubectl apply -f node0.certificate.yaml
-  kubectl apply -f node1.certificate.yaml
+  kubectl apply -f node0-certificate.yaml
+  kubectl apply -f node1-certificate.yaml
   ```
 - save node0 ca:
   ```
