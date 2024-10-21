@@ -3,8 +3,8 @@
 
 - set your relevant cluster host in
   - `static-nodes-configmap.yaml`
-  - `node0.ingress.yaml`
-  - `node1.ingress.yaml`
+  - `node0-ingress.yaml`
+  - `node1-ingress.yaml`
   - `node0.certificate.yaml`
   - `node1.certificate.yaml`
 - set your relevant storage class in `node0-pvc.yaml` and `node1-pvc.yaml`
@@ -54,14 +54,14 @@
   kubectl apply -f node0-pvc.yaml
   kubectl apply -f node1-pvc.yaml
   
-  kubectl apply -f node0.service.yaml
-  kubectl apply -f node1.service.yaml
+  kubectl apply -f node0-service.yaml
+  kubectl apply -f node1-service.yaml
 
-  kubectl apply -f node0.ingress.yaml
-  kubectl apply -f node1.ingress.yaml
+  kubectl apply -f node0-ingress.yaml
+  kubectl apply -f node1-ingress.yaml
   
-  kubectl apply -f node0.sts.yaml
-  kubectl apply -f node1.sts.yaml
+  kubectl apply -f node0-sts.yaml
+  kubectl apply -f node1-sts.yaml
   ```
 - verify that server TLS is configured correctly:
   ```
