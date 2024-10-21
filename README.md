@@ -63,3 +63,7 @@
   kubectl apply -f node0.sts.yaml
   kubectl apply -f node1.sts.yaml
   ```
+- verify that server TLS is configured correctly:
+  ```
+  openssl s_client -connect node0.your.host.here:443 -servername node0.your.host.here -showcerts
+  ```
