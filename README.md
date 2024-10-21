@@ -25,11 +25,11 @@
   ```
 - import node0 ca to truststore:
   ```
-  keytool -import -trustcacerts -file node0ca.crt -alias "node0" -keystore truststore.p12 -storepass abcd1234 -noprompt
+  keytool -import -file node0ca.crt -alias "node0" -keystore truststore.p12 -storepass abcd1234 -noprompt
   ```
 - import node1 ca to truststore:
   ```
-  keytool -import -trustcacerts -file node1ca.crt -alias "node1" -keystore truststore.p12 -storepass abcd1234 -noprompt
+  keytool -import -file node1ca.crt -alias "node1" -keystore truststore.p12 -storepass abcd1234 -noprompt
   ```
 - create truststore secret:
   ```
